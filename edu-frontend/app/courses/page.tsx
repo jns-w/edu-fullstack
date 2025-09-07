@@ -9,8 +9,7 @@ interface Course {
 }
 
 export default async function CoursesPage() {
-
-    const response = await fetch("http://localhost:8080/course/all", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/course/all`, {
         cache: "force-cache",
         next: {revalidate: 30}
     })
