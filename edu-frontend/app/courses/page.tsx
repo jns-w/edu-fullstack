@@ -1,12 +1,9 @@
 import Link from "next/link";
 
+import {Course} from "@/types/content-types";
+
 import styles from "./courses-page.module.scss"
 
-interface Course {
-    courseId: number,
-    title: string,
-    description: string
-}
 
 export default async function CoursesPage() {
     const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/course/all`, {

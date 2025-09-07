@@ -1,8 +1,8 @@
-import {Router} from "express";
-import {db} from "../config/db";
-import {searchCourseById} from "../services/search.services";
-import {chapters, courses, lessons} from "../config/schema";
-import {asc, eq} from "drizzle-orm";
+import { Router } from "express";
+import { db } from "../config/db";
+import { searchCourseById } from "../services/search.services";
+import { chapters, courses, lessons } from "../config/schema";
+import { asc, eq } from "drizzle-orm";
 
 const router = Router();
 
@@ -52,7 +52,12 @@ router.get("/:courseId/outline", async (req, res) => {
             .where(eq(chapters.courseId, courseId))
             .orderBy(chapters.orderIndex, lessons.orderIndex);
 
-        const chaptersMap = new Map<number, { id: number; title: string; orderIndex: number; lessons: { id: number; title: string; orderIndex: number }[] }>();
+        const chaptersMap = new Map<number, {
+            id: number;
+            title: string;
+            orderIndex: number;
+            lessons: { id: number; title: string; orderIndex: number }[]
+        }>();
         for (const row of chaptersData) {
             if (!chaptersMap.has(row.chapterId)) {
                 chaptersMap.set(row.chapterId, {
@@ -100,6 +105,10 @@ router.get("/:courseId/content", async (req, res) => {
             .where(eq(courses.courseId, courseId))
             .limit(1);
 
+        if (!courseContent.length) {
+            return res.status(404).json({ok: false, error: "Failed to get content"})
+        }
+
         res.status(200).json({ok: true, data: courseContent[0]})
     } catch (error) {
         res.status(500).json({error: "Request failed"})
@@ -117,7 +126,7 @@ router.get("/:courseId/search", async (req, res) => {
     }
     try {
         const searchResult = await searchCourseById(courseId, query)
-         res.status(200).json({ok: true, data: searchResult})
+        res.status(200).json({ok: true, data: searchResult})
     } catch (error) {
         res.status(500).json({error: "Request failed"})
     }

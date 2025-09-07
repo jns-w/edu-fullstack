@@ -1,30 +1,41 @@
 import Link from "next/link";
+import clsx from "clsx";
+
+import {type Chapter} from "@/types/content-types";
 
 import styles from "./chapter-menu.module.scss";
 
 interface ChapterMenuProps {
-    courseId: number
+    currentCourseId: number
+    currentLessonId: number
+    courseTitle: string
+    chapters: Chapter[]
 }
 
 export function ChapterMenu(props: ChapterMenuProps) {
 
     return (
         <div className={styles.chapterMenuWrapper}>
+            <h3><Link href={`/course/${props.currentCourseId}`}>{props.courseTitle}</Link></h3>
             <menu className={styles.chapterMenu}>
-                <li>
-                    <h4>Chapter name</h4>
-                    <ul>
-                        <li><Link href={`/course/${props.courseId}/lesson/1`}>Lesson 1</Link></li>
-                        <li><Link href={`/course/${props.courseId}/lesson/2`}>Lesson 2</Link></li>
-                    </ul>
-                </li>
-                <li>
-                    <h4>Chapter name</h4>
-                    <ul>
-                        <li>Lesson 1</li>
-                        <li>Lesson 2</li>
-                    </ul>
-                </li>
+                {
+                    props.chapters.map((chapter) => {
+                        return (
+                            <li className={styles.chapterItem} key={`${chapter.id}-${chapter.title}}`}>
+                                <h4>{chapter.title}</h4>
+                                <ul className={styles.lessonList}>
+                                    {chapter.lessons.map((lesson) => {
+                                        return (
+                                            <li key={`${lesson.id}-${lesson.title}`} className={clsx(styles.lessonItem, lesson.id === props.currentLessonId && styles.activeLesson)}>
+                                                <Link href={`/course/${props.currentCourseId}/lesson/${lesson.id}`}>{lesson.title}</Link>
+                                            </li>
+                                        )
+                                    })}
+                                </ul>
+                            </li>
+                        )
+                    })
+                }
             </menu>
         </div>
     )

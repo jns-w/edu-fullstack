@@ -4,12 +4,55 @@
   border-radius: var(--standard-radius);
   border: var(--card-outline) solid 1px;
   width: 100%;
-  padding: 20px;
+  padding: 15px 20px;
   height: fit-content;
+
+  h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+
+    a {
+      &:hover {
+        color: var(--accent-secondary);
+      }
+    }
+  }
 }
 
 .chapterMenu {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
+
+
+  .chapterItem {
+    h4 {
+      font-size: 16px;
+    }
+  }
+
+  .lessonList {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    gap: 5px;
+
+    .lessonItem {
+      a {
+        color: var(--text-mild2);
+        font-size: 14px;
+        margin-left: 10px;
+        font-weight: 500;
+
+        &:hover {
+          color: var(--accent-secondary);
+        }
+      }
+
+      &.activeLesson a {
+        color: var(--accent-secondary);
+      }
+    }
+  }
+
 }

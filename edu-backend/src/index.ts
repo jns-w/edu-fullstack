@@ -3,7 +3,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import userRoutes from "./routes/user.routes";
 import authRoutes from "./routes/auth.routes";
-import courseRoutes from "./routes/course.routes"
+import courseRoutes from "./routes/course.routes";
+import lessonRoutes  from "./routes/lesson.routes";
 import dictionaryServices from "./services/dictionary.services";
 import {connectDB} from "./config/db";
 
@@ -25,6 +26,7 @@ app.router.get("/ping", async (req, res) => {
 app.use("/auth", authRoutes)
 app.use("/user", userRoutes)
 app.use("/course", courseRoutes)
+app.use("/lesson", lessonRoutes)
 app.use("/dictionary", dictionaryServices)
 
 app.listen(port, () => {
