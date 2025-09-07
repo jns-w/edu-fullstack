@@ -2,6 +2,7 @@ FROM node:24-alpine
 WORKDIR /app
 COPY ./edu-backend/package.json ./edu-backend/package-lock.json ./
 RUN npm install --production
+RUN npm install -g nodemon
 COPY ./edu-backend .
 EXPOSE 8080
 ENTRYPOINT ["npm", "start"]
