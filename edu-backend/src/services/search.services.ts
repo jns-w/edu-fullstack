@@ -14,8 +14,9 @@ export async function searchCourseById(courseId: number, searchQuery: string) {
         }
 
         // Format query for tsvector (e.g., "bubble sort" -> "bubble & sort")
-        const formattedQuery = searchQuery.trim().replace(/\s+/g, " & ");
-        const tsQuery = sql`to_tsquery('english', ${formattedQuery})`;
+        // const formattedQuery = searchQuery.trim().replace(/\s+/g, " & ");
+        // const tsQuery = sql`to_tsquery('english', ${formattedQuery})`;
+        const tsQuery = sql`plainto_tsquery('english', ${searchQuery.trim()})`
 
         // Search chapters
         const matchingChapters = await db

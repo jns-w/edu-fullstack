@@ -64,6 +64,20 @@
       "when": 1757240874531,
       "tag": "0008_secret_warbird",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1757264636105,
+      "tag": "0009_condemned_energizer",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1757264876726,
+      "tag": "0010_eminent_amphibian",
+      "breakpoints": true
     }
   ]
 }
