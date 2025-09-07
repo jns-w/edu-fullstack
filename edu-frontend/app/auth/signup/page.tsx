@@ -40,9 +40,9 @@ export default function SignUpPage() {
             setSessionToken(data.accessToken)
             setUser({
                     email: data.user.email,
-                    id: data.user.userId,
                     name: data.user.name,
                     updatedAt: data.user.updated_at,
+                    userId: data.user.userId,
                 },
             )
             router.push("/")
