@@ -3,7 +3,7 @@ export const mockData = {
         {
             title: "Data Structures and Algorithms",
             description: "Data Structures and Algorithms (DSA) form the foundation of problem-solving in computer science. Mastering DSA helps you write efficient and optimized code.",
-            content: "Data Structures and Algorithms (DSA) is an essential skill for any programmer looking to solve problems efficiently.\n\nUnderstanding and utilizing DSA is especially important when optimization is crucial, like in game development, live video apps, and other areas where even a one-second delay can impact performance.\n\n```js\nBig companies tend to focus on DSA in coding interviews, so if you're good at it, you're more likely to land those higher-paying jobs.\n```\n\nIn this guide, we will cover:\n\n- Beginner's Guide to DSA\n- Is DSA for You? (Hint: If you like breaking down problems and finding smart solutions, definitely yes!)\n- Best Way to Learn DSA (Your way!)\n- How to Practice DSA?\n\nIf you are simply looking to learn DSA step-by-step, you can follow our free tutorials in the next section.",
+            content: "Data Structures and Algorithms (DSA) is an essential skill for any programmer looking to solve problems efficiently.\n\nUnderstanding and utilizing DSA is especially important when optimization is crucial, like in game development, live video apps, and other areas where even a one-second delay can impact performance.\n\nBig companies tend to focus on DSA in coding interviews, so if you're good at it, you're more likely to land those higher-paying jobs.\n\nIn this guide, we will cover:\n\n- Beginner's Guide to DSA\n- Is DSA for You? (Hint: If you like breaking down problems and finding smart solutions, definitely yes!)\n- Best Way to Learn DSA (Your way!)\n- How to Practice DSA?\n\nIf you are simply looking to learn DSA step-by-step, you can follow our free tutorials in the next section.",
             chapters: [
                 {
                     title: "DSA Introduction",
@@ -14,12 +14,12 @@ export const mockData = {
                         },
                         {
                             title: "What is an algorithm?",
-                            content: "",
+                            content: "In computer programming terms, an algorithm is a set of well-defined instructions to solve a particular problem. It takes a set of input(s) and produces the desired output. For example,\n\nAn algorithm to add two numbers:\n\nTake two number inputs\n\nAdd numbers using the + operator\n\nDisplay the result\n\nQualities of a Good Algorithm\nInput and output should be defined precisely.\nEach step in the algorithm should be clear and unambiguous.\nAlgorithms should be most effective among many different ways to solve a problem.\nAn algorithm shouldn't include computer code. Instead, the algorithm should be written in such a way that it can be used in different programming languages.",
                             topics: [
                                 {
                                     title: "Qualities of a Good Algorithm",
                                     content: "Input and output should be defined precisely.\nEach step in the algorithm should be clear and unambiguous.\nAlgorithms should be most effective among many different ways to solve a problem.\n\nAn algorithm shouldn't include computer code. Instead, the algorithm should be written in such a way that it can be used in different programming languages."
-                                }
+                                },
                             ]
                         },
                     ]
