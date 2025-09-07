@@ -1,0 +1,56 @@
+@use "@/styles/mixins/buttons";
+
+.pageWrapper {
+  height: 100vh;
+  display: flex;
+  box-sizing: border-box;
+  justify-content: center;
+  padding: 0 var(--page-pad-x);
+}
+
+.formDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: var(--page-top-margin);
+  height: 400px;
+
+  h2 {
+    font-weight: 700;
+    font-size: 32px;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+
+    label {
+      margin-bottom: 5px;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    input {
+      height: 40px;
+      margin-bottom: 10px;
+      padding: 5px 15px;
+      background-color: var(--card-mild2);
+      border: 1px solid transparent;
+      border-radius: 5px;
+      font-size: 15px;
+    }
+
+    button {
+      @include buttons.button-color(black);
+      margin-top: 10px;
+    }
+  }
+}
+
+.signInLink {
+  font-weight: 600;
+  color: var(--accent-secondary);
+}

@@ -1,0 +1,15 @@
+@use "../../styles/mixins/media";
+
+.chapterMenuWrapper {
+  border-radius: var(--standard-radius);
+  border: var(--card-outline) solid 1px;
+  width: 100%;
+  padding: 20px;
+  height: fit-content;
+}
+
+.chapterMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

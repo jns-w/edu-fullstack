@@ -1,0 +1,37 @@
+@use "../../styles/mixins/media";
+
+.topBarWrapper {
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  border-bottom: var(--card-outline) solid 1px;
+  padding: 0 var(--page-pad-x);
+}
+
+.topBarDiv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: var(--max-width);
+  height: 60px;
+  color: var(--text);
+  font-size: 15px;
+
+  @include media.breakpoint(tablet) {
+    font-size: 12.8px;
+  }
+}
+
+.homeBtn {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--accent-primary);
+}
+
+.topBarRightDiv {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}

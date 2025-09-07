@@ -1,0 +1,5 @@
+@use "@/styles/mixins/buttons";
+
+.themeToggleBtn {
+  @include buttons.icon-button;
+}

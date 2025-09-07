@@ -1,0 +1,124 @@
+@use "@/styles/mixins/media";
+@use "@/styles/variables/colors";
+
+:root {
+  --font-geist-sans: "Geist Sans", sans-serif;
+  --font-geist-mono: "Geist Mono", monospace;
+  --bg-base: linear-gradient(180deg, #f2f2f2 50%, #eee 100%);
+  --text: #222;
+  --text-mild: #{colors.$grey-600};
+  --text-mild2: #818181;
+  --accent-primary: #{colors.$brand-primary};
+  --accent-primary-mild: #{colors.$brand-primary-mild};
+  --accent-secondary: #2f1dc4;
+  --accent-gradient: linear-gradient(80deg, var(--accent), var(--accent-secondary));
+  --text-light: white;
+  --disabled: #dbdbdb;
+  --success: #579c11;
+  --warning: #bc8d2f;
+  --danger: #b72424;
+  --card: #f9f9f9;
+  --card-gradient: linear-gradient(180deg, var(--card), #f6f6f6);
+  --card-mild: #f6f6f6;
+  --card-mild2: #dbdbdb;
+  --card-hover: #f5f5f5;
+  --card-outline: #{colors.$sand};
+
+  /** Shadows */
+  --shadow: 0 1px 1px hsl(0deg 0% 0% / 4.5%),
+  0 2px 2px hsl(0deg 0% 0% / 2.5%),
+  0 4px 4px hsl(0deg 0% 0% / 1.5%),
+  0 8px 8px hsl(0deg 0% 0% / 1.2%),
+  0 16px 16px hsl(0deg 0% 0% / 1%);
+  --shadow-sm: 0 1px 1px hsl(0deg 0% 0% / 3.5%),
+  0 2px 2px hsl(0deg 0% 0% / 3.5%),
+  0 4px 4px hsl(0deg 0% 0% / 3.5%),
+  0 6px 6px hsl(0deg 0% 0% / 1.5%),
+  0 8px 8px hsl(0deg 0% 0% / 0.5%);
+
+  /** Paddings and Margins */
+  --page-pad-x: 40px;
+  --page-top-margin: 150px;
+
+  /** Spacing -- Radius */
+  --max-width: 1000px;
+  --standard-radius: 8px;
+
+  @include media.breakpoint(medium) {
+    --max-width: 800px;
+  }
+
+  @include media.breakpoint(tablet) {
+    --max-width: 640px;
+    --page-pad-x: 20px;
+    --page-top-margin: 100px;
+  }
+
+  @include media.breakpoint(mobile) {
+    --max-width: 400px;
+    --page-pad-x: 10px;
+  }
+}
+
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --bg-base: #{colors.$charcoal};
+  --accent-secondary: #4835e1;
+  --text: #{colors.$grey-100};
+  --text-mild: #{colors.$grey-300};
+  --card: #{colors.$grey-900};
+  --card-mild: #{colors.$grey-800};
+  --card-mild2: #{colors.$grey-900};
+  --card-outline: #{colors.$grey-700};
+}
+
+body, html {
+  color: var(--text);
+  font-family: var(--font-geist-sans), sans-serif;
+  background: var(--bg-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+}
+
+textarea, input, button {
+  border: none;
+  outline: none;
+}
+
+ul, menu {
+  list-style-type: none; /* Removes the default bullet points */
+  padding: 0;            /* Removes default padding */
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  /** apply permanent scroll to prevent popping */
+  overflow-y: scroll;
+
+  /** Class applied to temporarily disable transitions for whole app while switching theme */
+  &.noTransitions {
+    * {
+      transition: none !important;
+    }
+  }
+
+  /** Class applied to disable scrolling for whole app */
+  &.noScroll {
+    overflow: hidden;
+  }
+}

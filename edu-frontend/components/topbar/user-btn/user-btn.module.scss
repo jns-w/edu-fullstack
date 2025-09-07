@@ -1,0 +1,12 @@
+@use "@/styles/mixins/buttons";
+
+.signInSignUpDiv {
+  display: flex;
+  gap: 10px;
+}
+
+.getStartedBtn {
+  @include buttons.button-outline(var(--accent-secondary));
+  height: 30px;
+  font-size: 15px;
+}

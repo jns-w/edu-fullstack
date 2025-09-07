@@ -1,0 +1,33 @@
+.markdownWrapper {
+  font-size: 18px;
+
+  p {
+    margin-bottom: 18px;
+    line-height: 1.6;
+  }
+
+  li {
+    list-style-type: disc;
+    list-style-position: inside;
+    margin-bottom: 10px;
+
+    &::marker {
+      color: var(--accent-primary);
+    }
+  }
+}
+
+.codeWrapper {
+  width: inherit;
+}
+
+.code {
+  margin-top: 100px;
+  font-family: 'Geist Mono', 'Geist Mono Fallback', monospace;
+  border: 1px solid var(--card-outline);
+  border-radius: 6px;
+
+  span {
+    font-size: 14px;
+  }
+}

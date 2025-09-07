@@ -1,0 +1,32 @@
+@use "@/styles/mixins/media";
+
+.courseSearchBarWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.courseSearchBarDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 18px 18px;
+  background-color: var(--card-mild);
+  height: 35px;
+  border-radius: 15px;
+  border: var(--card-outline) solid 1px;
+  width: 250px;
+
+  .searchIcon {
+    position: absolute;
+    right: 16px;
+    color: var(--text-mild);
+  }
+}
+
+.courseSearchBarInput {
+  font-size: 15px;
+  background-color: transparent;
+  width: 100%;
+}
