@@ -1,0 +1,1 @@
+ALTER TABLE "lesson_progress" RENAME COLUMN "id" TO "lesson_progress_id";
