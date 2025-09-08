@@ -1,4 +1,15 @@
-import {pgTable, serial, text, timestamp, jsonb, integer, varchar, customType} from "drizzle-orm/pg-core";
+import {
+    pgTable,
+    serial,
+    text,
+    timestamp,
+    jsonb,
+    integer,
+    varchar,
+    customType,
+    boolean,
+    uniqueIndex
+} from "drizzle-orm/pg-core";
 import {sql} from "drizzle-orm";
 
 // Define custom tsvector type
@@ -62,6 +73,16 @@ export const topics = pgTable("topics", {
     ), // FTS for title and content
 });
 
+export const lessonProgress = pgTable('lesson_progress', {
+    lessonProgressId: serial('lesson_progress_id').primaryKey(),
+    userId: integer('user_id').references(() => users.userId).notNull(),
+    lessonId: integer('lesson_id').references(() => lessons.lessonId).notNull(),
+    completed: boolean('completed').notNull().default(false),
+    updatedAt: timestamp('updated_at').defaultNow().notNull(),
+}, (table) => ({
+    uniqueUserLesson: uniqueIndex('unique_user_lesson').on(table.userId, table.lessonId),
+}));
+
 // // Saved Resources table
 // export const savedResources = pgTable('saved_resources', {
 //     id: serial('id').primaryKey(),
@@ -72,16 +93,6 @@ export const topics = pgTable("topics", {
 //     source: text('source').notNull(),
 //     savedAt: timestamp('saved_at').defaultNow().notNull(),
 //     notes: text('notes'),
-// });
-//
-// // Progress Tracking table
-// export const progress = pgTable('progress', {
-//     id: serial('id').primaryKey(),
-//     userId: integer('user_id').references(() => users.id).notNull(),
-//     resourceId: integer('resource_id').references(() => savedResources.id).notNull(),
-//     status: text('status').notNull().default('in_progress'),
-//     progressPercentage: integer('progress_percentage').default(0),
-//     updatedAt: timestamp('updated_at').defaultNow().notNull(),
 // });
 //
 // // Cache table
