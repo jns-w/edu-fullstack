@@ -1,6 +1,6 @@
 import {Router} from "express";
-import {db} from "../config/db";
-import {users} from "../config/schema";
+import {db} from "../../config/db";
+import {users} from "../../config/schema";
 import bcrypt from "bcrypt"
 import {eq} from "drizzle-orm";
 import jwt from "jsonwebtoken";
@@ -9,11 +9,6 @@ import dotenv from "dotenv";
 dotenv.config()
 
 const router = Router();
-
-interface TokenPayload {
-    userId: string
-    username: string
-}
 
 router.post("/signup", async (req, res) => {
     try {
