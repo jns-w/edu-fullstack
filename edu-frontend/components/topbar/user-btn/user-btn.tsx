@@ -2,8 +2,8 @@
 import {FloatingPortal, offset, shift, useFloating} from "@floating-ui/react";
 import {RESET} from "jotai/vanilla/utils";
 import {useRouter} from "next/navigation";
+import {useEffect, useState} from "react";
 import {User} from "lucide-react";
-import {useState} from "react";
 import {useAtom} from "jotai";
 import Link from "next/link";
 
@@ -14,7 +14,7 @@ import styles from "./user-btn.module.scss"
 
 export function UserBtn() {
     const [user, setUser] = useAtom(userAtom);
-    const [, setAuthToken] = useAtom(authTokenAtom)
+    const [authToken, setAuthToken] = useAtom(authTokenAtom)
     const [showDropdown, setShowDropdown] = useState(false)
     
     const router = useRouter()
@@ -39,6 +39,30 @@ export function UserBtn() {
             label: "Sign out",
         },
     ]
+
+    useEffect(() => {
+     async function verifyAuthToken(token: null | string) {
+         if (!token) return;
+         const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/auth/verifyToken`, {
+             body: JSON.stringify({
+                 token
+             }),
+             headers: {
+                 "Content-Type": "application/json",
+             },
+             method: "POST"
+         })
+         const json = await response.json()
+         if (!json.ok) {
+             // sign user out and remove token
+             setAuthToken(RESET)
+             setUser(RESET)
+             router.push("/auth/signin")
+         }
+     }
+
+     verifyAuthToken(authToken).then()
+    }, [authToken, router, setAuthToken, setUser])
 
     if (!user) {
         return (
