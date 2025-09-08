@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { db } from "../config/db";
-import { searchCourseById } from "../services/search.services";
-import { chapters, courses, lessons } from "../config/schema";
+import { db } from "../../config/db";
+import { searchCourseById } from "../../services/search.services";
+import { chapters, courses, lessons } from "../../config/schema";
 import { asc, eq } from "drizzle-orm";
 
 const router = Router();

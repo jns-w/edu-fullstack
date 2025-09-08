@@ -1,12 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import userRoutes from "./routes/user.routes";
-import authRoutes from "./routes/auth.routes";
-import courseRoutes from "./routes/course.routes";
-import lessonRoutes  from "./routes/lesson.routes";
-import dictionaryServices from "./services/dictionary.services";
 import {connectDB} from "./config/db";
+import v1Router from "./routes/v1";
 
 dotenv.config();
 
@@ -23,11 +19,7 @@ app.router.get("/ping", async (req, res) => {
     return res.json("Pong")
 })
 
-app.use("/auth", authRoutes)
-app.use("/user", userRoutes)
-app.use("/course", courseRoutes)
-app.use("/lesson", lessonRoutes)
-app.use("/dictionary", dictionaryServices)
+app.use("/api/v1", v1Router)
 
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`)
