@@ -6,7 +6,6 @@ const router = Router();
 
 router.get("/:word", async (req, res) => {
     const word = req.params.word;
-    console.log("searching: ", word)
 
     try {
         const response = await axios.get(`https://freedictionaryapi.com/api/v1/entries/en/${word}`);
