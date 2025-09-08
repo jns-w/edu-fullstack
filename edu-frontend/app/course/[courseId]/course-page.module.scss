@@ -2,7 +2,7 @@
 @use "@/styles/mixins/media";
 
 .page {
-  height: 100vh;
+  min-height: calc(100svh - 62px);
   display: flex;
   box-sizing: border-box;
   justify-content: center;
@@ -13,6 +13,7 @@
   display: flex;
   flex-direction: column;
   margin-top: var(--page-top-margin);
+  margin-bottom: var(--page-bottom-margin);
   max-width: var(--max-width);
   width: 100%;
 }
@@ -39,8 +40,28 @@
     width: 100%;
   }
 
-  .chapterMenuWrapper {
+  .chapterMenu {
     width: 100%;
+  }
+
+  .chapterMenuWrapper {
+    display: block;
+  }
+
+  .chapterMenuDropdownWrapper {
+    display: none;
+    width: 100%;
+    justify-content: flex-end;
+
+    .showChapterMenuDropdownBtn {
+      display: flex;
+      gap: 3px;
+      padding: 8px;
+      border-radius: var(--standard-radius);
+      cursor: pointer;
+      background-color: var(--card-mild);
+      border: var(--card-outline) solid 1px;
+    }
   }
 
   @include media.breakpoint(small) {
@@ -52,6 +73,10 @@
 
     .chapterMenuWrapper {
       display: none;
+    }
+
+    .chapterMenuDropdownWrapper {
+      display: flex;
     }
   }
 }

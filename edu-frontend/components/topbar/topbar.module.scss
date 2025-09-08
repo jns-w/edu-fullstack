@@ -20,7 +20,7 @@
   font-size: 15px;
 
   @include media.breakpoint(tablet) {
-    font-size: 12.8px;
+    font-size: 13px;
   }
 }
 
@@ -33,5 +33,6 @@
 .topBarRightDiv {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 15px;
 }

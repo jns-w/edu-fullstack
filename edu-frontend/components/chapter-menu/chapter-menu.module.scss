@@ -17,6 +17,12 @@
       }
     }
   }
+
+  @include media.breakpoint(small) {
+    h3 {
+      font-size: 16px;
+    }
+  }
 }
 
 .chapterMenu {
@@ -52,6 +58,17 @@
       &.activeLesson a {
         color: var(--accent-secondary);
       }
+    }
+  }
+
+
+  @include media.breakpoint(small) {
+    .chapterItem h4 {
+      font-size: 14px;
+    }
+
+    .lessonItem a {
+     font-size: 13px;
     }
   }
 

@@ -2,11 +2,42 @@
 
 .signInSignUpDiv {
   display: flex;
-  gap: 10px;
+
+  p {
+    color: var(--text-mild);
+  }
 }
 
-.getStartedBtn {
-  @include buttons.button-outline(var(--accent-secondary));
-  height: 30px;
+.getStartedLink {
   font-size: 15px;
+  font-weight: 500;
+  color: var(--accent-secondary);
+}
+
+.signInLink {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.userBtn {
+  display: flex;
+  position: relative;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 12px;
+  gap: 5px;
+  border-radius: var(--standard-radius);
+  background-color: var(--accent-primary);
+
+  p {
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--text-light);
+  }
+
+  svg {
+    color: var(--text-light);
+  }
 }

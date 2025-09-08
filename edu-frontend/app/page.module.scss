@@ -3,7 +3,7 @@
 @use "@/styles/mixins/buttons";
 
 .page {
-  height: 100vh;
+  min-height: calc(100svh - 62px);
   display: flex;
   box-sizing: border-box;
   justify-content: center;
