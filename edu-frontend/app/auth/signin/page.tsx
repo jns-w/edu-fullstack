@@ -9,8 +9,6 @@ import { authTokenAtom, userAtom } from "@/states/user"
 
 import style from "./sign-in-page.module.scss"
 
-const SERVER_ENDPOINT = process.env.NEXT_PUBLIC_SERVER_ENDPOINT
-
 export default function SignInPage() {
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
@@ -25,16 +23,14 @@ export default function SignInPage() {
       email: email,
       password: password,
     }
-    const res = await fetch(`${SERVER_ENDPOINT}/auth/signin`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/auth/signin`, {
       body: JSON.stringify(body),
       headers: {
             "Content-Type": "application/json",
         },
         method: "POST",
     })
-    const json = await res.json()
-    // console.log(json)
-    // Save the token in local storage
+    const json = await response.json()
     if (json.ok) {
       const { data } = json
       console.log(data)
@@ -46,7 +42,7 @@ export default function SignInPage() {
           userId: data.user.id,
         },
       )
-      router.push("/")
+      router.push("/courses")
     }
   }
 

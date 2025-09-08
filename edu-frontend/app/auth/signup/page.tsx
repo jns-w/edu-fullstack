@@ -8,8 +8,6 @@ import {authTokenAtom, userAtom} from "@/states/user";
 
 import styles from "./sign-up-page.module.scss"
 
-const SERVER_ENDPOINT = process.env.NEXT_PUBLIC_SERVER_ENDPOINT
-
 export default function SignUpPage() {
     const [password, setPassword] = useState("")
     const [email, setEmail] = useState("")
@@ -26,14 +24,14 @@ export default function SignUpPage() {
             name: username,
             password: password,
         }
-        const res = await fetch(`${SERVER_ENDPOINT}/auth/signup`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/auth/signup`, {
             body: JSON.stringify(body),
             headers: {
                 "Content-Type": "application/json",
             },
             method: "POST",
         })
-        const json = await res.json()
+        const json = await response.json()
         if (json.ok) {
             const { data } = json
 
@@ -45,7 +43,7 @@ export default function SignUpPage() {
                     userId: data.user.userId,
                 },
             )
-            router.push("/")
+            router.push("/courses")
         }
     }
 
