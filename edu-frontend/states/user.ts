@@ -9,4 +9,4 @@ export type User = {
 }
 
 export const userAtom = atomWithStorage<null | User>("edu.user", null)
-export const sessionTokenAtom = atomWithStorage<null | string>("edu.tkn", null)
+export const authTokenAtom = atomWithStorage<null | string>("edu.tkn", null)

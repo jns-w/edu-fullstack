@@ -4,7 +4,7 @@ import {FormEvent, useState} from "react"
 import {useAtom} from "jotai/index";
 import Link from "next/link";
 
-import {sessionTokenAtom, userAtom} from "@/states/user";
+import {authTokenAtom, userAtom} from "@/states/user";
 
 import styles from "./sign-up-page.module.scss"
 
@@ -15,7 +15,7 @@ export default function SignUpPage() {
     const [email, setEmail] = useState("")
     const [username, setUsername] = useState("")
     const [user, setUser] = useAtom(userAtom)
-    const [sessionToken, setSessionToken] = useAtom(sessionTokenAtom)
+    const [sessionToken, setSessionToken] = useAtom(authTokenAtom)
 
     const router = useRouter()
 

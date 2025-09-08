@@ -10,6 +10,11 @@ dotenv.config()
 
 const router = Router();
 
+interface TokenPayload {
+    userId: string
+    username: string
+}
+
 router.post("/signup", async (req, res) => {
     try {
         const {email, name, password} = req.body;
@@ -33,7 +38,8 @@ router.post("/signup", async (req, res) => {
             accessToken: token,
             user: {
                 userId: user.userId,
-                email: user.email
+                email: user.email,
+                name: user.name
             }
         }
 
@@ -65,15 +71,15 @@ router.post("/signin", async (req, res) => {
             return res.status(401).json({message: "Invalid password"})
         }
 
-        const token =  jwt.sign({
-            id: user.userId,
-            email: user.email,
-        }, process.env.JWT_SECRET as string)
+        const token = jwt.sign({
+            userId: user.userId,
+            username: user.name,
+        }, process.env.JWT_SECRET as string, {expiresIn: "7d"})
 
         const responseData = {
             accessToken: token,
             user: {
-                userId: user.userId,
+                id: user.userId,
                 email: user.email,
                 name: user.name,
             }
@@ -81,17 +87,14 @@ router.post("/signin", async (req, res) => {
 
         res.status(200).json({ok: true, data: responseData})
     } catch (error) {
-        console.log(error)
         res.status(500).json({error: "Request failed"})
     }
 })
 
 router.post("/verifyToken", async (req, res) => {
     try {
-        const { token } = req.body;
+        const {token} = req.body;
         const validToken = jwt.verify(token, process.env.JWT_SECRET as string);
-
-        console.log(validToken)
 
         if (!validToken) {
             return res.status(401).json({ok: false, message: "Invalid token"})

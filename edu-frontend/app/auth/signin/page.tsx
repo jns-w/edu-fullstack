@@ -5,7 +5,7 @@ import { useAtom } from "jotai"
 import Link from "next/link";
 
 import styles from "@/app/auth/signup/sign-up-page.module.scss";
-import { sessionTokenAtom, userAtom } from "@/states/user"
+import { authTokenAtom, userAtom } from "@/states/user"
 
 import style from "./sign-in-page.module.scss"
 
@@ -15,7 +15,7 @@ export default function SignInPage() {
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
   const [user, setUser] = useAtom(userAtom)
-  const [sessionToken, setSessionToken] = useAtom(sessionTokenAtom)
+  const [sessionToken, setSessionToken] = useAtom(authTokenAtom)
 
   const router = useRouter()
 
@@ -43,7 +43,7 @@ export default function SignInPage() {
           email: data.user.email,
           name: data.user.name,
           updatedAt: data.user.updated_at,
-          userId: data.user.userId,
+          userId: data.user.id,
         },
       )
       router.push("/")
@@ -55,7 +55,7 @@ export default function SignInPage() {
       <div className={style.formDiv}>
         <h2>Welcome back</h2>
         <form className={style.form} onSubmit={handleSubmit}>
-          <label>Email</label>
+          <label >Email</label>
           <input type="email" value={email}
                  placeholder="johndoe@gmail.com"
                  onChange={(ev) => setEmail(ev.target.value)}
