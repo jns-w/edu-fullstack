@@ -4,11 +4,13 @@ import {ReactNode, useEffect, useState} from "react";
 import {useParams} from "next/navigation"
 import {List} from "lucide-react";
 import {useAtom} from "jotai";
+import Link from "next/link";
 
 import {ChapterMenuDropdown} from "@/components/chapter-menu-dropdown/chapter-menu-dropdown";
 import {CourseSearchBar} from "@/components/course-search-bar/course-search-bar";
+import {CourseProgress} from "@/components/course-progress/course-progress";
 import {ChapterMenu} from "@/components/chapter-menu/chapter-menu";
-import {userAtom} from "@/states/user";
+import {authTokenAtom, userAtom} from "@/states/user";
 
 import styles from "./course-page.module.scss";
 
@@ -17,9 +19,11 @@ export default function CourseLayout({children}: { children: ReactNode }) {
     const courseId = parseInt(params.courseId as string)
     const lessonId = parseInt(params.lessonId as string)
     const [user] = useAtom(userAtom)
+    const [authToken] = useAtom(authTokenAtom)
     const [courseTitle, setCourseTitle] = useState("")
     const [chapters, setChapters] = useState([])
     const [showChaptersDropdown, setShowChaptersDropdown] = useState(false)
+    const [progressRate, setProgressRate] = useState(0)
 
     const {floatingStyles, refs} = useFloating({
         middleware: [offset(3), shift()],
@@ -27,6 +31,28 @@ export default function CourseLayout({children}: { children: ReactNode }) {
         open: showChaptersDropdown,
         placement: "bottom-end",
     })
+
+
+    useEffect(() => {
+        async function fetchCourseProgress(courseId: number) {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/user/course/${courseId}/progress`, {
+                headers: {
+                    Authorization: `Bearer ${authToken}`,
+                    "Content-Type": "applications/json"
+                },
+                method: "GET"
+            })
+            const json = await response.json()
+
+            if (json.ok) {
+                console.log(json)
+                const { data } = json
+                setProgressRate(data.completionRate)
+            }
+        }
+
+        fetchCourseProgress(courseId).then()
+    }, [authToken, courseId]);
 
     useEffect(() => {
         async function fetchCourseOutline(courseId: number) {
@@ -47,7 +73,10 @@ export default function CourseLayout({children}: { children: ReactNode }) {
             <main className={styles.main}>
                 <section className={styles.courseSection}>
                     <div className={styles.courseSectionTopBar}>
-                        {user ? "Course Progress" : "Sign up to track your progress"}
+                        {user ?
+                            <CourseProgress progressRate={progressRate} /> :
+                            <p><Link href={"/auth/signup"}>Sign up</Link> to track your progress</p>
+                        }
                         <CourseSearchBar courseId={courseId}/>
                     </div>
                     <div className={styles.courseContent}>

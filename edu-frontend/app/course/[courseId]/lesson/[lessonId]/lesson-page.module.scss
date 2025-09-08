@@ -1,3 +1,14 @@
+@use "@/styles/mixins/buttons";
+
 .article {
   width: 100%;
+}
+
+.completeLessonBtn {
+  @include buttons.button-color(var(--accent-primary));
+
+  &.completed {
+    background-color: var(--card-mild);
+    cursor: default;
+  }
 }
