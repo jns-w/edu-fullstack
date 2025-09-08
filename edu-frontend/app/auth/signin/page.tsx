@@ -33,7 +33,6 @@ export default function SignInPage() {
     const json = await response.json()
     if (json.ok) {
       const { data } = json
-      console.log(data)
       setSessionToken(data.accessToken)
       setUser({
           email: data.user.email,
