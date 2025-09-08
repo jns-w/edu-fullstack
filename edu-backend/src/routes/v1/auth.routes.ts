@@ -25,8 +25,8 @@ router.post("/signup", async (req, res) => {
         });
 
         const token = jwt.sign({
-            id: user.userId,
-            email: user.email,
+            userId: user.userId,
+            username: user.name,
         }, process.env.JWT_SECRET as string)
 
         const responseData = {
@@ -97,7 +97,7 @@ router.post("/verifyToken", async (req, res) => {
 
         res.status(200).json({ok: true, data: validToken})
     } catch (error) {
-        res.status(500).json({error: "Request failed"})
+        res.status(500).json({ok: false, error: "Invalid token"})
     }
 })
 
