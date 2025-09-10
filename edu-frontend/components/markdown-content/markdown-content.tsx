@@ -53,7 +53,7 @@ function CodeBlock({children, className, inline, ...props}: CodeBlockProps) {
     }
     // Render highlighted code block
     return (
-        <div>
+        <div className={styles.codeWrapper}>
             <SyntaxHighlighter
                 PreTag="div"
                 language={match[1]}

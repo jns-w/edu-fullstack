@@ -1,3 +1,5 @@
+@use "@/styles/mixins/media";
+
 .markdownWrapper {
   font-size: 18px;
 
@@ -18,7 +20,20 @@
 }
 
 .codeWrapper {
-  width: inherit;
+  max-width: 680px;
+
+  @include media.breakpoint(medium) {
+    max-width: 480px;
+
+    .code span {
+      font-size: 12px;
+    }
+  }
+
+  @include media.breakpoint(small) {
+    max-width: 490px;
+  }
+
 }
 
 .code {
@@ -28,6 +43,6 @@
   border-radius: 6px;
 
   span {
-    font-size: 14px;
+    font-size: 13px;
   }
 }
