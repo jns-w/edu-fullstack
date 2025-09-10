@@ -6,6 +6,7 @@
 
 .completeLessonBtn {
   @include buttons.button-color(var(--accent-primary));
+  margin-top: 40px;
 
   &.completed {
     background-color: var(--card-mild);
