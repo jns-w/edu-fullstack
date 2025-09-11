@@ -10,6 +10,7 @@ import {ChapterMenuDropdown} from "@/components/chapter-menu-dropdown/chapter-me
 import {CourseSearchBar} from "@/components/course-search-bar/course-search-bar";
 import {CourseProgress} from "@/components/course-progress/course-progress";
 import {ChapterMenu} from "@/components/chapter-menu/chapter-menu";
+import {courseProgressFlagAtom} from "@/states/course";
 import {authTokenAtom, userAtom} from "@/states/user";
 
 import styles from "./course-page.module.scss";
@@ -24,6 +25,7 @@ export default function CourseLayout({children}: { children: ReactNode }) {
     const [chapters, setChapters] = useState([])
     const [showChaptersDropdown, setShowChaptersDropdown] = useState(false)
     const [progressRate, setProgressRate] = useState(0)
+    const [courseProgressFlag,] = useAtom(courseProgressFlagAtom)
 
     const {floatingStyles, refs} = useFloating({
         middleware: [offset(3), shift()],
@@ -31,7 +33,6 @@ export default function CourseLayout({children}: { children: ReactNode }) {
         open: showChaptersDropdown,
         placement: "bottom-end",
     })
-
 
     useEffect(() => {
         async function fetchCourseProgress(courseId: number) {
@@ -45,18 +46,27 @@ export default function CourseLayout({children}: { children: ReactNode }) {
             const json = await response.json()
 
             if (json.ok) {
-                console.log(json)
-                const { data } = json
+                const {data} = json
                 setProgressRate(data.completionRate)
             }
         }
 
         fetchCourseProgress(courseId).then()
-    }, [authToken, courseId]);
+    }, [authToken, courseId, courseProgressFlag]);
 
     useEffect(() => {
         async function fetchCourseOutline(courseId: number) {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/course/${courseId}/outline`)
+            const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/course/${courseId}/outline`,
+                {
+                    method: "GET",
+                    // add bearer token only if user is logged in
+                    ...(user && {
+                        headers: {
+                            Authorization: `Bearer ${authToken}`
+                        }
+                    })
+                }
+            )
             const json = await response.json()
             if (json.ok) {
                 const {data} = json
@@ -66,7 +76,7 @@ export default function CourseLayout({children}: { children: ReactNode }) {
         }
 
         fetchCourseOutline(courseId).then()
-    }, [courseId])
+    }, [authToken, courseId, user])
 
     return (
         <div className={styles.page}>
@@ -74,7 +84,7 @@ export default function CourseLayout({children}: { children: ReactNode }) {
                 <section className={styles.courseSection}>
                     <div className={styles.courseSectionTopBar}>
                         {user ?
-                            <CourseProgress progressRate={progressRate} /> :
+                            <CourseProgress progressRate={progressRate}/> :
                             <p><Link href={"/auth/signup"}>Sign up</Link> to track your progress</p>
                         }
                         <CourseSearchBar courseId={courseId}/>
@@ -96,9 +106,9 @@ export default function CourseLayout({children}: { children: ReactNode }) {
                                 showChaptersDropdown && (
                                     <FloatingPortal>
                                         <div ref={refs.setFloating} style={floatingStyles}>
-                                        <ChapterMenuDropdown courseTitle={""} chapters={chapters}
-                                                             currentCourseId={courseId} currentLessonId={lessonId}
-                                                             showFn={setShowChaptersDropdown}/>
+                                            <ChapterMenuDropdown courseTitle={""} chapters={chapters}
+                                                                 currentCourseId={courseId} currentLessonId={lessonId}
+                                                                 showFn={setShowChaptersDropdown}/>
                                         </div>
                                     </FloatingPortal>
                                 )
