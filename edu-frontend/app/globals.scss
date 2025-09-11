@@ -23,6 +23,7 @@
   --card-mild2: #dbdbdb;
   --card-hover: #f5f5f5;
   --card-outline: #{colors.$sand};
+  --inactive: #{colors.$grey-500};
 
   /** Shadows */
   --shadow: 0 1px 1px hsl(0deg 0% 0% / 4.5%),
