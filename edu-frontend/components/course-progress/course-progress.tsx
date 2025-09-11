@@ -1,11 +1,9 @@
 "use client"
-import {useEffect, useState} from "react";
 import {useAtom} from "jotai";
 
 import {authTokenAtom, userAtom} from "@/states/user";
 
 import styles from "./course-progress.module.scss";
-import * as process from "node:process";
 
 interface CourseProgressProps {
     progressRate: number
