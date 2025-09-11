@@ -4,6 +4,9 @@ import {useAtom} from "jotai";
 
 import {authTokenAtom, userAtom} from "@/states/user";
 
+import styles from "./course-progress.module.scss";
+import * as process from "node:process";
+
 interface CourseProgressProps {
     progressRate: number
 }
@@ -14,6 +17,9 @@ export function CourseProgress(props: CourseProgressProps) {
     return (
         <div>
             Course Progress: {props.progressRate}%
+            <div className={styles.progressTrack}>
+                <div className={styles.progressBar} style={{width: `${props.progressRate}%`}}/>
+            </div>
         </div>
     )
 }

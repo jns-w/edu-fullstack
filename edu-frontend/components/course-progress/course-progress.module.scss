@@ -1,0 +1,10 @@
+.progressTrack {
+  width: 100%;
+  background-color: var(--inactive);
+  height: 3px;
+}
+
+.progressBar {
+  background-color: var(--accent-primary);
+  height: 100%;
+}
