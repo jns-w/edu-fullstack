@@ -5,8 +5,9 @@ import {useAtom} from "jotai";
 import clsx from "clsx";
 
 import {MarkdownContent} from "@/components/markdown-content/markdown-content";
+import {courseProgressFlagAtom} from "@/states/course";
+import {authTokenAtom, userAtom} from "@/states/user";
 import {Topic} from "@/types/content-types";
-import {authTokenAtom} from "@/states/user";
 
 import styles from "./lesson-page.module.scss"
 
@@ -15,10 +16,12 @@ export default function LessonPage() {
     const courseId = parseInt(params.courseId as string)
     const lessonId = parseInt(params.lessonId as string)
     const [authToken] = useAtom(authTokenAtom)
+    const [user] = useAtom(userAtom)
     const [lessonTitle, setLessonTitle] = useState("")
     const [content, setContent] = useState("")
     const [topics, setTopics] = useState<Topic[]>([])
     const [lessonIsComplete, setLessonIsComplete] = useState(false)
+    const [, setCourseProgressFlag] = useAtom(courseProgressFlagAtom)
 
     async function completeLesson(lessonId: number) {
         const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/user/lesson/${lessonId}/complete`, {
@@ -31,24 +34,35 @@ export default function LessonPage() {
 
         if (json.ok) {
             setLessonIsComplete(true)
+            setCourseProgressFlag(prev => prev === 0 ? 1 : 0)
         }
     }
 
     useEffect(() => {
         async function fetchLessonContent(lessonId: number) {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/lesson/${lessonId}/content`)
+            const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/lesson/${lessonId}/content`,
+                {
+                    method: "GET",
+                    // add bearer token if user is logged in, this retrieves lesson completion data
+                    ...(user && {
+                        headers: {
+                            Authorization: `Bearer ${authToken}`
+                        }
+                    })
+                })
             const json = await response.json()
 
             if (json.ok) {
                 const {data} = json
-                setLessonTitle(data.title)
-                setContent(data.content)
-                setTopics(data.topics)
+                setLessonTitle(data.lesson.title)
+                setContent(data.lesson.content)
+                setTopics(data.lesson.topics)
+                setLessonIsComplete(data.lessonCompleted)
             }
         }
 
         fetchLessonContent(lessonId).then()
-    }, [lessonId])
+    }, [authToken, lessonId, user])
 
     return <article className={styles.article}>
         <h2>{lessonTitle}</h2>

@@ -1,7 +1,11 @@
-import { Router } from "express";
+import {Router} from "express";
 import {db} from "../../config/db";
-import {lessons, topics} from "../../config/schema";
-import {eq} from "drizzle-orm";
+import {lessonProgress, lessons, topics} from "../../config/schema";
+import {and, eq} from "drizzle-orm";
+import jwt, {JwtPayload} from "jsonwebtoken";
+import dotenv from "dotenv"
+
+dotenv.config()
 
 const router = Router();
 
@@ -27,11 +31,11 @@ router.get("/:lessonId/content", async (req, res) => {
             .orderBy(topics.orderIndex); // Order topics by createdAt
 
         if (!lessonData.length) {
-            return res.status(404).json({ ok: false, error: 'Lesson not found' });
+            return res.status(404).json({ok: false, error: 'Lesson not found'});
         }
 
         // Structure the response
-        const lesson = {
+        let lesson = {
             lessonId: lessonData[0].lessonId,
             title: lessonData[0].lessonTitle,
             content: lessonData[0].lessonContent,
@@ -44,8 +48,33 @@ router.get("/:lessonId/content", async (req, res) => {
                 })),
         };
 
-        res.status(200).json({ok: true, data: lesson})
+        let lessonCompleted = null;
+        // check for bearer token
+        const authHeader = req.headers["authorization"];
+
+        if (authHeader && authHeader.startsWith("Bearer ")) {
+            const authToken = authHeader.split(" ")[1];
+            const user = jwt.verify(authToken, process.env.JWT_SECRET as string) as JwtPayload;
+
+            // check for user's lesson progress
+            const result = await db
+                .select({completed: lessonProgress.completed})
+                .from(lessonProgress)
+                .where(
+                    and(
+                        eq(lessonProgress.lessonId, lessonId),
+                        eq(user.userId, lessonProgress.userId)
+                    )
+                );
+            lessonCompleted = result[0]?.completed || false;
+        }
+        res.status(200).json({
+            ok: true, data: {
+                lesson, lessonCompleted
+            }
+        })
     } catch (error) {
+        console.log(error)
         res.status(500).json({error: "Request failed"})
     }
 })
