@@ -9,7 +9,7 @@
   margin-top: 40px;
 
   &.completed {
-    background-color: var(--card-mild);
+    background-color: var(--inactive);
     cursor: default;
   }
 }
