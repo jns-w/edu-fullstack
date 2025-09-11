@@ -30,7 +30,6 @@ export default function LessonPage() {
         const json = await response.json()
 
         if (json.ok) {
-            console.log("ok")
             setLessonIsComplete(true)
         }
     }
