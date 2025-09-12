@@ -1,7 +1,9 @@
 .progressTrack {
   width: 100%;
-  background-color: var(--inactive);
-  height: 3px;
+  background-color: rgba(0, 0, 0, .3);
+  height: 4px;
+  border-radius: 20px;
+  overflow: clip;
 }
 
 .progressBar {

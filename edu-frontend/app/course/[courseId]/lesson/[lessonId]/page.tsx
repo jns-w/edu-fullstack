@@ -40,15 +40,10 @@ export default function LessonPage() {
     useEffect(() => {
         async function fetchLessonContent(lessonId: number) {
             setIsLoading(true)
-            const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/lesson/${lessonId}/content`,
+            const response = await fetchWithAuth(`${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/lesson/${lessonId}/content`,
+                authToken,
                 {
-                    method: "GET",
-                    // add bearer token if user is logged in, this retrieves lesson completion data
-                    ...(user && authToken && {
-                        headers: {
-                            Authorization: `Bearer ${authToken}`
-                        }
-                    })
+                    method: "GET"
                 })
             const json = await response.json()
 
