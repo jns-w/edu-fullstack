@@ -17,6 +17,7 @@ export default function LessonPage() {
     const lessonId = parseInt(params.lessonId as string)
     const [authToken] = useAtom(authTokenAtom)
     const [user] = useAtom(userAtom)
+    const [isLoading, setIsLoading] = useState(false)
     const [lessonTitle, setLessonTitle] = useState("")
     const [content, setContent] = useState("")
     const [topics, setTopics] = useState<Topic[]>([])
@@ -40,11 +41,12 @@ export default function LessonPage() {
 
     useEffect(() => {
         async function fetchLessonContent(lessonId: number) {
+            setIsLoading(true)
             const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/lesson/${lessonId}/content`,
                 {
                     method: "GET",
                     // add bearer token if user is logged in, this retrieves lesson completion data
-                    ...(user && {
+                    ...(user && authToken && {
                         headers: {
                             Authorization: `Bearer ${authToken}`
                         }
@@ -59,10 +61,20 @@ export default function LessonPage() {
                 setTopics(data.lesson.topics)
                 setLessonIsComplete(data.lessonCompleted)
             }
+
+            setIsLoading(false)
         }
 
         fetchLessonContent(lessonId).then()
     }, [authToken, lessonId, user])
+
+    if (isLoading) {
+        return <div>Loading...</div>
+    }
+
+    if (!content) {
+        return <div>No content</div>
+    }
 
     return <article className={styles.article}>
         <h2>{lessonTitle}</h2>
