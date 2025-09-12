@@ -1,10 +1,9 @@
 export async function fetchWithAuth(endpoint: string, authToken: null | string, options: RequestInit = {}): Promise<Response> {
-    // Default headers with Authorization
     const defaultHeaders: Record<string, string> = {
         "Content-Type": "application/json",
     };
 
-    if (authToken !== "") {
+    if (authToken) {
         defaultHeaders["Authorization"] = `Bearer ${authToken}`;
     }
 
