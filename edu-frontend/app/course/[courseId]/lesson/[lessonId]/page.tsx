@@ -7,6 +7,7 @@ import clsx from "clsx";
 import {MarkdownContent} from "@/components/markdown-content/markdown-content";
 import {courseProgressFlagAtom} from "@/states/course";
 import {authTokenAtom, userAtom} from "@/states/user";
+import {fetchWithAuth} from "@/utils/fetch";
 import {Topic} from "@/types/content-types";
 
 import styles from "./lesson-page.module.scss"
@@ -25,10 +26,7 @@ export default function LessonPage() {
     const [, setCourseProgressFlag] = useAtom(courseProgressFlagAtom)
 
     async function completeLesson(lessonId: number) {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/user/lesson/${lessonId}/complete`, {
-            headers: {
-                Authorization: `Bearer ${authToken}`
-            },
+        const response = await fetchWithAuth(`${process.env.NEXT_PUBLIC_SERVER_ENDPOINT}/user/lesson/${lessonId}/complete`, authToken, {
             method: "POST"
         })
         const json = await response.json()
@@ -94,10 +92,14 @@ export default function LessonPage() {
                 )
             })
         }
-        <button disabled={lessonIsComplete}
-                onClick={() => completeLesson(lessonId)}
-                className={clsx(styles.completeLessonBtn, lessonIsComplete && styles.completed)}
-        >{lessonIsComplete ? "Completed!" : "Complete lesson"}
-        </button>
+        {
+            user && (
+                <button disabled={lessonIsComplete}
+                        onClick={() => completeLesson(lessonId)}
+                        className={clsx(styles.completeLessonBtn, lessonIsComplete && styles.completed)}
+                >{lessonIsComplete ? "Completed!" : "Complete lesson"}
+                </button>
+            )
+        }
     </article>
 }
